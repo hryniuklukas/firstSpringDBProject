@@ -1,6 +1,8 @@
 package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Services;
 
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.Employee;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Exceptions.EmployeeAlreadyExistsException;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Mapper.Mapper;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Repos.EmployeeRepo;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +19,6 @@ class Service1Test {
         Employee test1 = new Employee("TestName", "TestRole");
         given(employeeRepo.existsByName(test1.getName())).willReturn(true);
         // when
-        assertThatThrownBy(()->service1.newEmployee(test1)).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(()->service1.newEmployee(Mapper.toDTO(test1))).isInstanceOf(EmployeeAlreadyExistsException.class);
     }
 }

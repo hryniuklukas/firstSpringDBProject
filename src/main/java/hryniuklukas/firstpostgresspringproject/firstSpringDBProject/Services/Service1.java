@@ -1,8 +1,10 @@
 package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Services;
 
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.Employee;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.EmployeeDTO;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Exceptions.EmployeeAlreadyExistsException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Exceptions.EmployeeNotFoundException;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Mapper.Mapper;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Repos.EmployeeRepo;
 import org.springframework.stereotype.Service;
 
@@ -12,19 +14,14 @@ import java.util.List;
 
 public class Service1 {
     private final EmployeeRepo employeeRepo;
-
-
     public Service1(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
     }
-    ;
-
-
-    public Employee newEmployee(Employee newEmployee) {
+    public Employee newEmployee(EmployeeDTO newEmployee) {
         if (employeeRepo.existsByName(newEmployee.getName())) {
            throw new EmployeeAlreadyExistsException(newEmployee.getName());
         }
-        return employeeRepo.save(newEmployee);
+        return employeeRepo.save(Mapper.toDomain(newEmployee));
     }
     public Employee removeEmployee(Employee employeeToBeRemoved)
     {
@@ -37,5 +34,4 @@ public class Service1 {
     List<Employee> listAllEmployees() {
         return employeeRepo.findAll();
     }
-
 }

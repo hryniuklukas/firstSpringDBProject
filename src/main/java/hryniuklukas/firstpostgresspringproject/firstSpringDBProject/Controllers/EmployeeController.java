@@ -1,6 +1,7 @@
 package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Controllers;
 
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.Employee;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.EmployeeDTO;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Exceptions.EmployeeNotFoundException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Repos.EmployeeRepo;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Services.Service1;
@@ -24,7 +25,7 @@ public class EmployeeController {
         return employeeRepo.findAll();
     }
     @PostMapping("/employees")
-    Employee newEmployee(@RequestBody Employee newEmployee){
+    Employee newEmployee(@RequestBody EmployeeDTO newEmployee){
         return service1.newEmployee(newEmployee);
     }
     @GetMapping("/employees/{id}")
