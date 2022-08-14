@@ -29,16 +29,32 @@ public class EmployeeService {
     }
 
     public void removeEmployeeById(Long id) {
-        log.info("Trying to remove employee with id: {}", id);
+        log.info("Trying to remove employee with id: {}.", id);
         if (employeeRepo.existsById(id)) {
             employeeRepo.deleteById(id);
+            log.info("Employee with id: {} deleted.", id);
         } else {
-            log.warn("Removal unsuccesfull");
+            log.warn("Removal unsuccesfull.");
             throw new EmployeeNotFoundException(id);
         }
     }
+    public EmployeeDTO findEmployeeById(Long id)
+    {
+        EmployeeDTO foundEmployee;
+        log.info("Trying to find employee with id: {}.", id);
+        try{
+        foundEmployee = mapper.toDTO(employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));}
+        catch(EmployeeNotFoundException e){
+            log.warn("Employee not found.");
+            return null;
+        }
+        log.info("Employee with id: {} found.", id);
+        return foundEmployee;
+
+    }
 
     List<Employee> listAllEmployees() {
+        log.info("Listing all employees");
         return employeeRepo.findAll();
     }
 }
