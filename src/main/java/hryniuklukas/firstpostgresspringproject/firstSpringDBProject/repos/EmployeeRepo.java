@@ -1,5 +1,5 @@
-package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Repos;
-import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.Employee;
+package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.repos;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

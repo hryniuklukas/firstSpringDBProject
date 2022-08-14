@@ -1,6 +1,6 @@
-package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Exceptions;
+package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions;
 
-import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.Company.Employee;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Employee;
 
 public class EmployeeNotFoundException  extends RuntimeException{
     public EmployeeNotFoundException(Long id)
