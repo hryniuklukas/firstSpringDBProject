@@ -14,17 +14,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private final EmployeeRepo employeeRepo;
+
     private final EmployeeService employeeService;
 
-    EmployeeController(EmployeeRepo employeeRepo, EmployeeService employeeService) {
-        this.employeeRepo = employeeRepo;
+    EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping
     List<Employee> listAllEmployees() {
-        return employeeRepo.findAll();
+        return employeeService.listAllEmployees();
     }
 
     @PostMapping
@@ -33,10 +32,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    Employee findEmployeeById(@PathVariable Long id) {
+    EmployeeDTO findEmployeeById(@PathVariable Long id) {
         log.info("Hello");
-        return employeeRepo.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
+        return employeeService.findEmployeeById(id);
     }
 
     @DeleteMapping("/{id}")
