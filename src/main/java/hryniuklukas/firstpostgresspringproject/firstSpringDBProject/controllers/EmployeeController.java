@@ -2,8 +2,6 @@ package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.controllers
 
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Employee;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.EmployeeDTO;
-import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeNotFoundException;
-import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.repos.EmployeeRepo;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.services.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
