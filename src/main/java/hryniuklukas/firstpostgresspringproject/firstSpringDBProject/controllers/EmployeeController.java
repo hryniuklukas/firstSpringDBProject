@@ -36,7 +36,10 @@ public class EmployeeController {
         log.info("Hello");
         return employeeService.findEmployeeById(id);
     }
-
+    @GetMapping("/role/{givenRole}")
+    List <Employee> listAllEmployeesOfGivenRole(@PathVariable String givenRole){  //TO BE CHANGED FOR EmployeeDTO
+        return employeeService.listAllWithGivenRole(givenRole);
+    }
     @DeleteMapping("/{id}")
     void removeEmployeeById(@PathVariable Long id) {
         employeeService.removeEmployeeById(id);

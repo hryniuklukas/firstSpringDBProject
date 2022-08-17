@@ -25,12 +25,12 @@ class EmployeeServiceTest {
         // when
         assertThatThrownBy(()-> employeeService.newEmployee(mapper.toDTO(test1))).isInstanceOf(EmployeeAlreadyExistsException.class);
     }
-    @Test
-    void getEmployeeByIdTest(){
-        Long id = 1L;
-        given(employeeRepo.findById(id).isEmpty());
-        assertThatThrownBy(()->employeeService.findEmployeeById(id)).isInstanceOf(EmployeeNotFoundException.class);
-    }
+//    @Test
+//    void getEmployeeByIdTest(){
+//        Long id = 1L;
+//        given(employeeRepo.findById(id).isEmpty());
+//        assertThatThrownBy(()->employeeService.findEmployeeById(id)).isInstanceOf(EmployeeNotFoundException.class);
+//    }
     @Test
     void deleteEmployeeByIdTest(){
         Long id = 1L;

@@ -5,9 +5,13 @@ import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Empl
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeAlreadyExistsException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeNotFoundException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.repos.EmployeeRepo;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.specifications.EmployeeSpecification;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.utilities.SearchCriteria;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 @Slf4j
 @Service
@@ -56,5 +60,10 @@ public class EmployeeService {
     public List<Employee> listAllEmployees() {
         log.info("Listing all employees");
         return employeeRepo.findAll();
+    }
+    public List<Employee> listAllWithGivenRole(String givenRole){
+        log.info("Listing all employees of role: {}", givenRole);
+        EmployeeSpecification spec1 = new EmployeeSpecification(new SearchCriteria("role", ":", givenRole));
+        return employeeRepo.findAll(Specification.where(spec1));
     }
 }
