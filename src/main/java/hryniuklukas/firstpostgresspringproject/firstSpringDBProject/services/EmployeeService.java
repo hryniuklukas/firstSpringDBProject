@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 
@@ -57,13 +59,17 @@ public class EmployeeService {
 
     }
 
-    public List<Employee> listAllEmployees() {
+    public List<EmployeeDTO> listAllEmployees() {
         log.info("Listing all employees");
-        return employeeRepo.findAll();
+        return employeeRepo.findAll().stream()
+                .map(mapper::toDTO)
+                .toList();
     }
-    public List<Employee> listAllWithGivenRole(String givenRole){
+    public List<EmployeeDTO> listAllWithGivenRole(String givenRole){
         log.info("Listing all employees of role: {}", givenRole);
         EmployeeSpecification spec1 = new EmployeeSpecification(new SearchCriteria("role", ":", givenRole));
-        return employeeRepo.findAll(Specification.where(spec1));
+        return employeeRepo.findAll(Specification.where(spec1)).stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 }

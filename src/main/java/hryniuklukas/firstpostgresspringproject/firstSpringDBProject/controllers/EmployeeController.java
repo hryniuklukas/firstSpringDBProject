@@ -22,7 +22,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    List<Employee> listAllEmployees() {
+    List<EmployeeDTO> listAllEmployees() {
         return employeeService.listAllEmployees();
     }
 
@@ -37,7 +37,7 @@ public class EmployeeController {
         return employeeService.findEmployeeById(id);
     }
     @GetMapping("/role/{givenRole}")
-    List <Employee> listAllEmployeesOfGivenRole(@PathVariable String givenRole){  //TO BE CHANGED FOR EmployeeDTO
+    List <EmployeeDTO> listAllEmployeesOfGivenRole(@PathVariable String givenRole){  //TO BE CHANGED FOR EmployeeDTO
         return employeeService.listAllWithGivenRole(givenRole);
     }
     @DeleteMapping("/{id}")

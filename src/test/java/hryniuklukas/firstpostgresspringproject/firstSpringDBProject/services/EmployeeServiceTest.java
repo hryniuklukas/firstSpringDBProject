@@ -1,10 +1,13 @@
 package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.services;
 
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Employee;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.EmployeeDTO;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeAlreadyExistsException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeNotFoundException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.repos.EmployeeRepo;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,26 +20,26 @@ class EmployeeServiceTest {
     EmployeeRepo employeeRepo = mock(EmployeeRepo.class);
     Mapper mapper = new Mapper();
     EmployeeService employeeService = new EmployeeService(employeeRepo, mapper);
+    Employee testEmployee = new Employee("TestName", "TestRole");
+    EmployeeDTO testEmployeeDTO = new EmployeeDTO("TestName", "TestRole");
     @Test
     void getEmployeeByNameTest() {
         // given
-        Employee test1 = new Employee("TestName", "TestRole");
-        given(employeeRepo.existsByName(test1.getName())).willReturn(true);
+        given(employeeRepo.existsByName(testEmployee.getName())).willReturn(true);
         // when
-        assertThatThrownBy(()-> employeeService.newEmployee(mapper.toDTO(test1))).isInstanceOf(EmployeeAlreadyExistsException.class);
+        assertThatThrownBy(()-> employeeService.newEmployee(mapper.toDTO(testEmployee))).isInstanceOf(EmployeeAlreadyExistsException.class);
     }
-//    @Test
-//    void getEmployeeByIdTest(){
-//        Long id = 1L;
-//        given(employeeRepo.findById(id).isEmpty());
-//        assertThatThrownBy(()->employeeService.findEmployeeById(id)).isInstanceOf(EmployeeNotFoundException.class);
-//    }
+    @Test
+    void getEmployeeByIdTest(){
+        Long id = 1L;
+        given(employeeRepo.findById(id)).willReturn(Optional.of(testEmployee));
+        assertThat(employeeService.findEmployeeById(id)).isEqualTo(testEmployeeDTO);
+    }
     @Test
     void deleteEmployeeByIdTest(){
         Long id = 1L;
         given(employeeRepo.existsById(id)).willReturn(false);
         assertThatThrownBy(()->employeeService.removeEmployeeById(id)).isInstanceOf(EmployeeNotFoundException.class);
-
     }
 
 }
