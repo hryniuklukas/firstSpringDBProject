@@ -5,7 +5,7 @@ import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Empl
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeAlreadyExistsException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.exceptions.EmployeeNotFoundException;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.repos.EmployeeRepo;
-import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.specifications.EmployeeSpecification;
+import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.specifications.MySpecification;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.utilities.SearchCriteria;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,13 +42,13 @@ public class EmployeeService {
             throw new EmployeeNotFoundException(id);
         }
     }
-    public EmployeeDTO findEmployeeById(Long id)
-    {
+
+    public EmployeeDTO findEmployeeById(Long id) {
         EmployeeDTO foundEmployee;
         log.info("Trying to find employee with id: {}.", id);
-        try{
-        foundEmployee = mapper.toDTO(employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));}
-        catch(EmployeeNotFoundException e){
+        try {
+            foundEmployee = mapper.toDTO(employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));
+        } catch (EmployeeNotFoundException e) {
             log.warn("Employee not found.");
             return null;
         }
@@ -63,10 +63,19 @@ public class EmployeeService {
                 .map(mapper::toDTO)
                 .toList();
     }
-    public List<EmployeeDTO> listAllWithGivenRole(String givenRole){
+
+    public List<EmployeeDTO> listAllWithGivenRole(String givenRole) {
         log.info("Listing all employees of role: {}", givenRole);
-        EmployeeSpecification spec1 = new EmployeeSpecification(new SearchCriteria("role", ":", givenRole));
+        MySpecification<Employee> spec1 = new MySpecification<>(new SearchCriteria("role", ":", givenRole.replace("_", " ")));
         return employeeRepo.findAll(Specification.where(spec1)).stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
+    public List<EmployeeDTO> listAllWithName(String name) {
+        log.info("Listing all employees named: {}", name);
+        MySpecification<Employee> spec2 = new MySpecification<>(new SearchCriteria("name", ":", name.replace("_", " ")));
+        return employeeRepo.findAll(Specification.where(spec2)).stream()
                 .map(mapper::toDTO)
                 .toList();
     }

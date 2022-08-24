@@ -3,16 +3,16 @@ package hryniuklukas.firstpostgresspringproject.firstSpringDBProject.controllers
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.Employee;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.company.EmployeeDTO;
 import hryniuklukas.firstpostgresspringproject.firstSpringDBProject.services.EmployeeService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;
 
     EmployeeController(EmployeeService employeeService) {
@@ -35,8 +35,12 @@ public class EmployeeController {
         return employeeService.findEmployeeById(id);
     }
     @GetMapping("/role/{givenRole}")
-    List <EmployeeDTO> listAllEmployeesOfGivenRole(@PathVariable String givenRole){  //TO BE CHANGED FOR EmployeeDTO
+    List <EmployeeDTO> listAllEmployeesOfGivenRole(@PathVariable String givenRole){
         return employeeService.listAllWithGivenRole(givenRole);
+    }
+    @GetMapping("/name/{givenName}")
+    List <EmployeeDTO> listAllEmployeesOfGivenName(@PathVariable String givenName){
+        return employeeService.listAllWithName(givenName);
     }
     @DeleteMapping("/{id}")
     void removeEmployeeById(@PathVariable Long id) {
